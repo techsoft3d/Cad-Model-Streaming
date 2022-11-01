@@ -48,6 +48,7 @@
   <script type="text/javascript"
     src="javascripts/communicator_scripts/communicator_server_integration.js?v=2022.2.0"></script>
   <script type="text/javascript" src="javascripts/communicator_scripts/sample.js?v=2022.2.0"></script>
+  <script type="text/javascript" src="javascripts/conversionService.js"></script>
 
   <style>
     #citation {
@@ -60,63 +61,45 @@
   </style>
 
   <script type="module">
-    import {
-      getContainerEndpoint
-    } from "./javascripts/common/get_endpoint.js";
-
-    let viewer;
-
     var model_name = Sample._getParameterByName("instance");
+    var model_uid = modelUIDs[model_name]
+    var viewer = await startViewer(model_name, model_uid)
 
-    getContainerEndpoint().then((data) => {
-      if (data === "error: 429 - Too many requests") {
-        window.location.replace("/error/too-many-requests");
-      }
+    var date = new Date();
+    var start = date.getTime();
 
-      var date = new Date();
-      var start = date.getTime();
+    viewer.setCallbacks({
+      modelStructureReady: function () {
+        var date = new Date();
+        var start = date.getTime();
 
-      viewer = new Communicator.WebViewer({
-        containerId: "viewerContainer",
-        endpointUri: data.endpoint_uri,
-        model: model_name,
-        enginePath: HWP_ENGINE_PATH,
-      });
+        var end = date.getTime();
+        console.log("Load time = " + (end - start) / 1000.0 + " seconds.");
 
-      viewer.setCallbacks({
-        modelStructureReady: function () {
-          var date = new Date();
-          var start = date.getTime();
-
-          var end = date.getTime();
-          console.log("Load time = " + (end - start) / 1000.0 + " seconds.");
-
-          $(".dropdown").css("display", "inline-block");
-        },
-      });
-
-      const uiConfig = {
-        containerId: "content",
-        screenConfiguration: Sample.screenConfiguration,
-      };
-      const ui = new Communicator.Ui.Desktop.DesktopUi(viewer, uiConfig);
-
-      viewer.start();
-      window.onresize = function () {
-        viewer.resizeCanvas();
-      };
-
-      if (model_name === "ferrari-engine-v12") {
-        $("#citation").text("Model courtesy of Darren Simpson");
-      } else if (model_name === "wren-mw54-turbo-jet") {
-        $("#citation").text("Model courtesy of Vasileios Thalassinos");
-      }
-      var end = date.getTime();
-
-      console.log("Load time = " + (end - start) / 1000.0 + " seconds.");
-
-      $(".dropdown").css("display", "inline-block");
+        $(".dropdown").css("display", "inline-block");
+      },
     });
+
+    const uiConfig = {
+      containerId: "content",
+      screenConfiguration: Sample.screenConfiguration,
+    };
+    const ui = new Communicator.Ui.Desktop.DesktopUi(viewer, uiConfig);
+
+    window.onresize = function () {
+      viewer.resizeCanvas();
+    };
+
+    if (model_name === "ferrari-engine-v12") {
+      $("#citation").text("Model courtesy of Darren Simpson");
+    } else if (model_name === "wren-mw54-turbo-jet") {
+      $("#citation").text("Model courtesy of Vasileios Thalassinos");
+    }
+    var end = date.getTime();
+
+    console.log("Load time = " + (end - start) / 1000.0 + " seconds.");
+
+    $(".dropdown").css("display", "inline-block");
   </script>
 </head>
 
