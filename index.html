@@ -35,12 +35,8 @@
   <script type="text/javascript" src="javascripts/communicator_scripts/jquery.minicolors.min.js"></script>
   <script type="text/javascript" src="javascripts/communicator_scripts/keymaster.min.js"></script>
   <script type="text/javascript" src="javascripts/communicator_scripts/iscroll.min.js"></script>
-  <script>
-    const HWP_VERSION = "2022.2.0";
-    const STREAM_CACHE_API = "https://sc-api.techsoft3d.com";
-    const HWP_ENGINE_PATH = "https://cdn.jsdelivr.net/gh/techsoft3d/hoops-web-viewer@2022.2.0/";
-    const HWP_VIEWER_PATH = "https://cdn.jsdelivr.net/gh/techsoft3d/hoops-web-viewer@2022.2.0/hoops_web_viewer.js?v=2022.2.0";
-  </script>
+  <script type="text/javascript" src="javascripts/mobile-detect.min.js"></script>
+
 
   <script type="text/javascript"
     src="https://cdn.jsdelivr.net/gh/techsoft3d/hoops-web-viewer@2022.2.0/hoops_web_viewer.js?v=2022.2.0"></script>
@@ -64,6 +60,8 @@
     var model_name = Sample._getParameterByName("instance");
     var model_uid = modelUIDs[model_name]
     var viewer = await startViewer(model_name, model_uid)
+    var ui = null;
+    var md = new MobileDetect(window.navigator.userAgent);
 
     var date = new Date();
     var start = date.getTime();
@@ -80,11 +78,17 @@
       },
     });
 
+    var screenConfiguration = (md.mobile() !== null) ? Communicator.ScreenConfiguration.Mobile : Sample.screenConfiguration;
     const uiConfig = {
       containerId: "content",
-      screenConfiguration: Sample.screenConfiguration,
+      screenConfiguration: screenConfiguration,
     };
-    const ui = new Communicator.Ui.Desktop.DesktopUi(viewer, uiConfig);
+
+
+    ui = new Communicator.Ui.Desktop.DesktopUi(viewer, uiConfig);
+
+
+    // const ui = new Communicator.Ui.Desktop.DesktopUi(viewer, uiConfig);
 
     window.onresize = function () {
       viewer.resizeCanvas();
