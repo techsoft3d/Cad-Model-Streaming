@@ -1,6 +1,6 @@
 # Hoops Web Platform - CAD Model Streaming Demo
 
-See this demo running live on [GitHub Pages](https://techsoft3d.github.io/2D-DWG-Drawing-Viewer/index.html?instance=HotelFloorplan).
+See this demo running live on [GitHub Pages](https://techsoft3d.github.io/Cad-Model-Streaming/?instance=microengine).
 
 ## In order to run locally
 
