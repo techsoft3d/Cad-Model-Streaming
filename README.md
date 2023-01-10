@@ -2,7 +2,7 @@
 
 See this demo running live on [GitHub Pages](https://techsoft3d.github.io/Cad-Model-Streaming/?instance=microengine).
 
-## In order to run locally
+## In order to run locally 
 
 We recommand using Visual Studio Code with the Live Server extension to run this application locally.
 
