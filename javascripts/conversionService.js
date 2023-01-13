@@ -13,12 +13,17 @@ async function startViewer(modelName, uid) {
 
         let res = await fetch(conversionServiceURI + '/api/streamingSession');
         var data = await res.json();
+        
+        var endpointUriBeginning = 'ws://';
 
+        if(conversionServiceURI.substring(0, 5).includes("https")){
+                endpointUriBeginning = 'wss://'
+        }
         await fetch(conversionServiceURI + '/api/enableStreamAccess/' + data.sessionid, { method: 'put', headers: { 'items': JSON.stringify([uid]) } });
 
         viewer = new Communicator.WebViewer({
                 containerId: "viewerContainer",
-                endpointUri: 'wss://' + data.serverurl + ":" + data.port + '?token=' + data.sessionid,
+                endpointUri: endpointUriBeginning + data.serverurl + ":" + data.port + '?token=' + data.sessionid,
                 model: modelName,
                 enginePath: "https://cdn.jsdelivr.net/gh/techsoft3d/hoops-web-viewer@latest",
                 rendererType: 0
