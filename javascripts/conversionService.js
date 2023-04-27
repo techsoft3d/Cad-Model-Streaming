@@ -7,7 +7,7 @@ modelUIDs = {
 }
 
 async function startViewer(modelName, uid) {
-        const conversionServiceURI = "https://csapi.techsoft3d.com";
+        const conversionServiceURI = "https://csapi_develop.techsoft3d.com";
 
         var viewer;
 
@@ -25,7 +25,7 @@ async function startViewer(modelName, uid) {
                 containerId: "viewerContainer",
                 endpointUri: endpointUriBeginning + data.serverurl + ":" + data.port + '?token=' + data.sessionid,
                 model: modelName,
-                enginePath: "https://cdn.jsdelivr.net/gh/techsoft3d/hoops-web-viewer@latest",
+                enginePath: "https://cdn.jsdelivr.net/gh/techsoft3d/hoops-web-viewer",
                 rendererType: 0
         });
 
