@@ -7,7 +7,7 @@ modelUIDs = {
 }
 
 async function startViewer(modelName, uid) {
-        const conversionServiceURI = "https://csapi_develop.techsoft3d.com";
+        const conversionServiceURI = "https://csapi.techsoft3d.com";
 
         var viewer;
 
