@@ -50,7 +50,6 @@ async function loadScript() {
         var versionNumer = result['hcVersion']
         var url = `https://cdn.jsdelivr.net/gh/techsoft3d/hoops-web-viewer@20${versionNumer}/hoops_web_viewer.js`
 
-        fetchVersionNumber
         return new Promise((resolve, reject) => {
             $.getScript(url, async function () {
                 resolve();
