@@ -37,14 +37,14 @@
   <script type="text/javascript" src="javascripts/communicator_scripts/iscroll.min.js"></script>
   <script type="text/javascript" src="javascripts/mobile-detect.min.js"></script>
 
-
+  <script type="text/javascript" src="javascripts/conversionService.js"></script>
   <script type="text/javascript"
     src="https://cdn.jsdelivr.net/gh/techsoft3d/hoops-web-viewer/hoops_web_viewer.js"></script>
   <script type="text/javascript" src="javascripts/communicator_scripts/web_viewer_ui.js?v=latest" id="hwvUI"></script>
   <script type="text/javascript"
     src="javascripts/communicator_scripts/communicator_server_integration.js?v=latest"></script>
   <script type="text/javascript" src="javascripts/communicator_scripts/sample.js?v=latest"></script>
-  <script type="text/javascript" src="javascripts/conversionService.js"></script>
+
 
   <style>
     #citation {
@@ -59,7 +59,9 @@
   <script type="module">
     var model_name = Sample._getParameterByName("instance");
     var model_uid = modelUIDs[model_name]
+    loadScript()
     var viewer = await startViewer(model_name, model_uid)
+
     var ui = null;
     var md = new MobileDetect(window.navigator.userAgent);
 

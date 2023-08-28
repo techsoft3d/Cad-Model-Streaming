@@ -34,3 +34,26 @@ async function startViewer(modelName, uid) {
         return viewer
 
 }
+
+async function fetchVersionNumber() {
+        const conversionServiceURI = "https://csapi.techsoft3d.com";
+
+        let res = await fetch(conversionServiceURI + '/api/hcVersion');
+        var data = await res.json();
+        
+        return data
+
+}
+
+async function loadScript() {
+        var result = await fetchVersionNumber();
+        var versionNumer = result['hcVersion']
+        var url = `https://cdn.jsdelivr.net/gh/techsoft3d/hoops-web-viewer@20${versionNumer}/hoops_web_viewer.js`
+
+        fetchVersionNumber
+        return new Promise((resolve, reject) => {
+            $.getScript(url, async function () {
+                resolve();
+            });
+        });
+    }
