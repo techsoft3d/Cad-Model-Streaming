@@ -40,19 +40,62 @@ async function fetchVersionNumber() {
 
         let res = await fetch(conversionServiceURI + '/api/hcVersion');
         var data = await res.json();
+        versionNumer = data;
         
         return data
 
 }
 
-async function loadScript() {
-        var result = await fetchVersionNumber();
-        var versionNumer = result['hcVersion']
-        var url = `https://cdn.jsdelivr.net/gh/techsoft3d/hoops-web-viewer@20${versionNumer}/hoops_web_viewer.js`
 
-        return new Promise((resolve, reject) => {
-            $.getScript(url, async function () {
-                resolve();
-            });
+
+async function initializeViewer() {
+        var model_name = Sample._getParameterByName("instance");
+        var model_uid = modelUIDs[model_name]
+  
+        var viewer = await startViewer(model_name, model_uid)
+  
+        var ui = null;
+        var md = new MobileDetect(window.navigator.userAgent);
+  
+        var date = new Date();
+        var start = date.getTime();
+  
+        viewer.setCallbacks({
+          modelStructureReady: function () {
+            var date = new Date();
+            var start = date.getTime();
+  
+            var end = date.getTime();
+            console.log("Load time = " + (end - start) / 1000.0 + " seconds.");
+  
+            $(".dropdown").css("display", "inline-block");
+          },
         });
-    }
+  
+        var screenConfiguration = (md.mobile() !== null) ? Communicator.ScreenConfiguration.Mobile : Sample.screenConfiguration;
+        const uiConfig = {
+          containerId: "content",
+          screenConfiguration: screenConfiguration,
+        };
+  
+  
+        ui = new Communicator.Ui.Desktop.DesktopUi(viewer, uiConfig);
+  
+  
+        // const ui = new Communicator.Ui.Desktop.DesktopUi(viewer, uiConfig);
+  
+        window.onresize = function () {
+          viewer.resizeCanvas();
+        };
+  
+        if (model_name === "ferrari-engine-v12") {
+          $("#citation").text("Model courtesy of Darren Simpson");
+        } else if (model_name === "wren-mw54-turbo-jet") {
+          $("#citation").text("Model courtesy of Vasileios Thalassinos");
+        }
+        var end = date.getTime();
+  
+        console.log("Load time = " + (end - start) / 1000.0 + " seconds.");
+  
+        $(".dropdown").css("display", "inline-block");
+}

@@ -29,6 +29,7 @@
   <link rel="stylesheet" href="stylesheets/demos-common.css" />
   <link rel="stylesheet" href="stylesheets/drop-down.css" />
 
+
   <script type="text/javascript" src="javascripts/communicator_scripts/jquery-3.3.1.min.js"></script>
   <script type="text/javascript" src="javascripts/jquery-ui.min.js"></script>
   <script type="text/javascript" src="javascripts/jquery.ui.touch-punch.min.js"></script>
@@ -36,14 +37,8 @@
   <script type="text/javascript" src="javascripts/communicator_scripts/keymaster.min.js"></script>
   <script type="text/javascript" src="javascripts/communicator_scripts/iscroll.min.js"></script>
   <script type="text/javascript" src="javascripts/mobile-detect.min.js"></script>
-
   <script type="text/javascript" src="javascripts/conversionService.js"></script>
-  <script type="text/javascript"
-    src="https://cdn.jsdelivr.net/gh/techsoft3d/hoops-web-viewer/hoops_web_viewer.js"></script>
-  <script type="text/javascript" src="javascripts/communicator_scripts/web_viewer_ui.js?v=latest" id="hwvUI"></script>
-  <script type="text/javascript"
-    src="javascripts/communicator_scripts/communicator_server_integration.js?v=latest"></script>
-  <script type="text/javascript" src="javascripts/communicator_scripts/sample.js?v=latest"></script>
+  <script type="text/javascript" src="javascripts/common/load_scripts.js"></script>
 
 
   <style>
@@ -57,56 +52,13 @@
   </style>
 
   <script type="module">
-    var model_name = Sample._getParameterByName("instance");
-    var model_uid = modelUIDs[model_name]
-    loadScript()
-    var viewer = await startViewer(model_name, model_uid)
-
-    var ui = null;
-    var md = new MobileDetect(window.navigator.userAgent);
-
-    var date = new Date();
-    var start = date.getTime();
-
-    viewer.setCallbacks({
-      modelStructureReady: function () {
-        var date = new Date();
-        var start = date.getTime();
-
-        var end = date.getTime();
-        console.log("Load time = " + (end - start) / 1000.0 + " seconds.");
-
-        $(".dropdown").css("display", "inline-block");
-      },
-    });
-
-    var screenConfiguration = (md.mobile() !== null) ? Communicator.ScreenConfiguration.Mobile : Sample.screenConfiguration;
-    const uiConfig = {
-      containerId: "content",
-      screenConfiguration: screenConfiguration,
-    };
-
-
-    ui = new Communicator.Ui.Desktop.DesktopUi(viewer, uiConfig);
-
-
-    // const ui = new Communicator.Ui.Desktop.DesktopUi(viewer, uiConfig);
-
-    window.onresize = function () {
-      viewer.resizeCanvas();
-    };
-
-    if (model_name === "ferrari-engine-v12") {
-      $("#citation").text("Model courtesy of Darren Simpson");
-    } else if (model_name === "wren-mw54-turbo-jet") {
-      $("#citation").text("Model courtesy of Vasileios Thalassinos");
-    }
-    var end = date.getTime();
-
-    console.log("Load time = " + (end - start) / 1000.0 + " seconds.");
-
-    $(".dropdown").css("display", "inline-block");
+    await loadDynamicScript()
+    await loadIndividualScript("javascripts/communicator_scripts/web_viewer_ui.js")
+    await loadIndividualScript("javascripts/communicator_scripts/communicator_server_integration.js?v=latest")
+    await loadIndividualScript("javascripts/communicator_scripts/sample.js?v=latest")
+    initializeViewer()
   </script>
+
 </head>
 
 <body>
