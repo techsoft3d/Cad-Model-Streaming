@@ -1,29 +1,23 @@
 modelUIDs = {
-        "landing-gear-main-shaft": "7451c93e-a26e-44a1-b341-cc8ab8fb6c1a",
+        "landing-gear-main-shaft": "b6483773-6c67-47f6-9d4b-3d7190689994",
         "microengine": "2b3a2eb9-42de-4b16-936d-b41822be6f4a",
         "wren-mw54-turbo-jet": "1f9c0951-082a-4c79-a9b1-00a9ec2f289b",
         "ferrari-engine-v12": "46df0595-207c-44ff-9bb0-572e01be7a1d",
         "Ducati900SS-cafe-racer": "431619ea-e6c5-4354-882b-fc32a527e2ef"
 }
 
-async function startViewer(modelName, uid) {
-        const conversionServiceURI = "https://csapi.techsoft3d.com";
 
+async function startViewer(modelName, uid) {
+   
         var viewer;
 
-        let res = await fetch(conversionServiceURI + '/api/streamingSession');
-        var data = await res.json();
-        
-        var endpointUriBeginning = 'ws://';
+        let sessioninfo = await caasClient.getStreamingSession();
 
-        if(conversionServiceURI.substring(0, 5).includes("https")){
-                endpointUriBeginning = 'wss://'
-        }
-        await fetch(conversionServiceURI + '/api/enableStreamAccess/' + data.sessionid, { method: 'put', headers: { 'items': JSON.stringify([uid]) } });
+        await caasClient.enableStreamAccess(sessioninfo.sessionid, [uid]);
 
         viewer = new Communicator.WebViewer({
                 containerId: "viewerContainer",
-                endpointUri: endpointUriBeginning + data.serverurl + ":" + data.port + '?token=' + data.sessionid,
+                endpointUri: sessioninfo.endpointUri,
                 model: modelName,
                 enginePath: "https://cdn.jsdelivr.net/gh/techsoft3d/hoops-web-viewer",
                 rendererType: 0
@@ -36,19 +30,15 @@ async function startViewer(modelName, uid) {
 }
 
 async function fetchVersionNumber() {
-        const conversionServiceURI = "https://csapi.techsoft3d.com";
-
-        let res = await fetch(conversionServiceURI + '/api/hcVersion');
-        var data = await res.json();
-        versionNumer = data;
-        
+        let data = await caasClient.getHCVersion();
+        versionNumer = data;        
         return data
-
 }
 
 
 
 async function initializeViewer() {
+
         var model_name = Sample._getParameterByName("instance");
         var model_uid = modelUIDs[model_name]
   
