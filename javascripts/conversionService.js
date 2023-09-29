@@ -11,9 +11,9 @@ async function startViewer(modelName, uid) {
    
         var viewer;
 
-        let sessioninfo = await caasClient.getStreamingSession();
-
-        await caasClient.enableStreamAccess(sessioninfo.sessionid, [uid]);
+//        let sessioninfo = await caasClient.getStreamingSession();
+//        await caasClient.enableStreamAccess(sessioninfo.sessionid, [uid]);
+        let sessioninfo = await caasClient.getStreamingSession({accessItems:[uid]});
 
         viewer = new Communicator.WebViewer({
                 containerId: "viewerContainer",
@@ -24,7 +24,6 @@ async function startViewer(modelName, uid) {
         });
 
         viewer.start();
-
         return viewer
 
 }
