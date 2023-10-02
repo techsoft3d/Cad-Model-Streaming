@@ -1,9 +1,9 @@
 modelUIDs = {
-        "landing-gear-main-shaft": "b6483773-6c67-47f6-9d4b-3d7190689994",
-        "microengine": "2b3a2eb9-42de-4b16-936d-b41822be6f4a",
-        "wren-mw54-turbo-jet": "1f9c0951-082a-4c79-a9b1-00a9ec2f289b",
-        "ferrari-engine-v12": "46df0595-207c-44ff-9bb0-572e01be7a1d",
-        "Ducati900SS-cafe-racer": "431619ea-e6c5-4354-882b-fc32a527e2ef"
+        "landing-gear-main-shaft": "348fb408-6946-4300-ba5a-69d684f4622e",
+        "microengine": "b1891f18-8ea9-4b7d-8d7a-0dfa52dc4458",
+        "wren-mw54-turbo-jet": "3d59b1fb-5fc7-4139-9aa4-829eadc30ed8",
+        "ferrari-engine-v12": "6e12d497-7b8a-471d-babf-8fefc2c682b5",
+        "Ducati900SS-cafe-racer": "60fffcaa-af1b-4ecf-be82-5d9f4f270a1e"
 }
 
 
