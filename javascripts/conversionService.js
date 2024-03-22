@@ -19,7 +19,7 @@ async function startViewer(modelName, uid) {
                 containerId: "viewerContainer",
                 endpointUri: sessioninfo.endpointUri,
                 model: modelName,
-                enginePath: `https://cdn.jsdelivr.net/gh/techsoft3d/hoops-web-viewer`,
+                enginePath: `https://cdn.jsdelivr.net/gh/techsoft3d/hoops-web-viewer@20${versionNumer}`,
                 rendererType: 0
         });
 
