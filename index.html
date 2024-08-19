@@ -29,6 +29,8 @@
   <link rel="stylesheet" href="css/ViewerSettings.css" />
   <link rel="stylesheet" href="css/jquery.minicolors.css" />
   <link rel="stylesheet" href="css/Relationships.css" />
+  <link rel="stylesheet" href="css/drop-down.css" />
+
 
 
   <script type="text/javascript" src="javascripts/jquery-3.5.1.min.js"></script>
@@ -91,8 +93,10 @@
   <!-- <script type="module" crossorigin src="javascripts/Router.js"></script> -->
   <!-- <script type="module" crossorigin src="/demo-app/web-viewer-demo/src/main.js"></script> -->
 
-  <script type="text/javascript" src="javascripts/conversionService.js"></script>
-  <script type="text/javascript" src="javascripts/common/load_scripts.js"></script>
+
+
+  <!-- <script type="module" src="javascripts/conversionService.js"></script> -->
+  <!-- <script type="text/javascript" src="javascripts/common/load_scripts.js"></script> -->
   <script type="text/javascript" src="javascripts/caas.min.js"></script>
 
 
@@ -110,11 +114,17 @@
 
   <script type="module">
     caasClient.init('https://caas.techsoft3d.com', { accessKey: "64e757dbd8ac93cc087cfab7" });
-    await loadDynamicScript()
+    // await loadDynamicScript()
     // await loadIndividualScript("javascripts/communicator_scripts/web_viewer_ui.js")
     // await loadIndividualScript("javascripts/communicator_scripts/communicator_server_integration.js?v=latest")
     // await loadIndividualScript("javascripts/communicator_scripts/sample.js?v=latest")
-    initializeViewer()
+    // initializeViewerModule
+    // <script type="module">
+    import * as conversionService from "/javascripts/conversionService.js";
+
+
+    conversionService.initializeViewer();
+    // initializeViewer()
   </script>
 
 </head>

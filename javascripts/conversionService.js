@@ -1,4 +1,7 @@
-modelUIDs = {
+import { WebViewer } from "@hoops/web-viewer";
+
+
+var modelUIDs = {
         "landing-gear-main-shaft": "348fb408-6946-4300-ba5a-69d684f4622e",
         "microengine": "b1891f18-8ea9-4b7d-8d7a-0dfa52dc4458",
         "wren-mw54-turbo-jet": "3d59b1fb-5fc7-4139-9aa4-829eadc30ed8",
@@ -8,18 +11,17 @@ modelUIDs = {
 
 
 async function startViewer(modelName, uid) {
-   
         var viewer;
 
 //        let sessioninfo = await caasClient.getStreamingSession();
 //        await caasClient.enableStreamAccess(sessioninfo.sessionid, [uid]);
         let sessioninfo = await caasClient.getStreamingSession({accessItems:[uid]});
 
-        viewer = new Communicator.WebViewer({
+        viewer = new WebViewer({
                 containerId: "viewerContainer",
                 endpointUri: sessioninfo.endpointUri,
                 model: modelName,
-                enginePath: `https://cdn.jsdelivr.net/gh/techsoft3d/hoops-web-viewer@20${versionNumer}`,
+                enginePath: `https://cdn.jsdelivr.net/gh/techsoft3d/hoops-web-viewer@2024.4.0`, //${versionNumer}
                 // enginePath: `https://cdn.jsdelivr.net/gh/techsoft3d/hoops-web-viewer@20${versionNumer}`,
                 rendererType: 0
         });
@@ -29,7 +31,7 @@ async function startViewer(modelName, uid) {
 
 }
 
-async function fetchVersionNumber() {
+export async function fetchVersionNumber() {
         let data = await caasClient.getHCVersion();
         versionNumer = data;        
         return data
@@ -37,7 +39,7 @@ async function fetchVersionNumber() {
 
 
 
-async function initializeViewer() {
+export async function initializeViewer() {
 
         // var model_name = Sample._getParameterByName("instance");
         const queryString = window.location.search;
