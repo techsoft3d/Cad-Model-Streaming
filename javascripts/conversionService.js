@@ -100,3 +100,11 @@ export async function initializeViewer() {
   
         $(".dropdown").css("display", "inline-block");
 }
+
+export function createImportMap(version) {
+        return {
+          imports: {
+            "my-library": `https://cdn.example.com/my-library@${version}/index.js`
+          }
+        };
+}

@@ -49,6 +49,22 @@
     }
   </script>
 
+  <!-- <script>
+    // Determine the version dynamically
+    const libraryVersion = "1.0.0"; // This could be determined by some logic
+
+    // Create the import map
+    const importMap = createImportMap(libraryVersion);
+
+    // Create a script element for the import map
+    const importMapScript = document.createElement('script');
+    importMapScript.type = 'importmap';
+    importMapScript.textContent = JSON.stringify(importMap);
+
+    // Append the import map to the document head
+    document.head.appendChild(importMapScript);
+  </script> -->
+
   <!-- <script type="module" crossorigin src="/_virtual/modulepreload-polyfill.js"></script> -->
   <script type="module" crossorigin src="javascripts/common/UiUtil.js"></script>
   <script type="module" crossorigin src="javascripts/common/ColorPicker.js"></script>
