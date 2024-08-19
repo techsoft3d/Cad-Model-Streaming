@@ -17,29 +17,85 @@
     })(window, document, 'script', 'dataLayer', 'GTM-PB9P4KS');</script>
   <!-- End Google Tag Manager -->
 
-  <link rel="stylesheet" href="stylesheets/TreeControl.css" />
-  <link rel="stylesheet" href="stylesheets/Toolbar.css" />
-  <link rel="stylesheet" href="stylesheets/Common.css" />
-  <link rel="stylesheet" href="stylesheets/Desktop.css" />
-  <link rel="stylesheet" href="stylesheets/NoteText.css" />
-  <link rel="stylesheet" href="stylesheets/PropertyWindow.css" />
-  <link rel="stylesheet" href="stylesheets/ViewerSettings.css" />
-  <link rel="stylesheet" href="stylesheets/jquery.minicolors.css" />
-  <link rel="stylesheet" href="stylesheets/jquery-ui.min.css" />
-  <link rel="stylesheet" href="stylesheets/demos-common.css" />
-  <link rel="stylesheet" href="stylesheets/drop-down.css" />
+
+  <link rel="stylesheet" href="css/TreeControl.css" />
+  <link rel="stylesheet" href="css/Toolbar.css" />
+  <link rel="stylesheet" href="css/Common.css" />
+  <link rel="stylesheet" href="css/Desktop.css" />
+  <link rel="stylesheet" href="css/Mobile.css" />
+  <link rel="stylesheet" href="css/NoteText.css" />
+  <link rel="stylesheet" href="css/jquery-ui.min.css" />
+  <link rel="stylesheet" href="css/PropertyWindow.css" />
+  <link rel="stylesheet" href="css/ViewerSettings.css" />
+  <link rel="stylesheet" href="css/jquery.minicolors.css" />
+  <link rel="stylesheet" href="css/Relationships.css" />
 
 
-  <script type="text/javascript" src="javascripts/communicator_scripts/jquery-3.3.1.min.js"></script>
+  <script type="text/javascript" src="javascripts/jquery-3.5.1.min.js"></script>
   <script type="text/javascript" src="javascripts/jquery-ui.min.js"></script>
   <script type="text/javascript" src="javascripts/jquery.ui.touch-punch.min.js"></script>
-  <script type="text/javascript" src="javascripts/communicator_scripts/jquery.minicolors.min.js"></script>
-  <script type="text/javascript" src="javascripts/communicator_scripts/keymaster.min.js"></script>
-  <script type="text/javascript" src="javascripts/communicator_scripts/iscroll.min.js"></script>
+  <script type="text/javascript" src="javascripts/keymaster.min.js"></script>
+  <script type="text/javascript" src="javascripts/iscroll.min.js"></script>
   <script type="text/javascript" src="javascripts/mobile-detect.min.js"></script>
+  <script type="text/javascript" src="javascripts/jquery.minicolors.min.js"></script>
+
+  <script type="importmap">
+    {
+      "imports": {
+        "@hoops/web-viewer": "https://cdn.jsdelivr.net/gh/techsoft3d/hoops-web-viewer@2024.4.0/hoops-web-viewer.mjs"
+      }
+    }
+  </script>
+
+  <!-- <script type="module" crossorigin src="/demo-app/_virtual/modulepreload-polyfill.js"></script> -->
+  <script type="module" crossorigin src="javascripts/common/UiUtil.js"></script>
+  <script type="module" crossorigin src="javascripts/common/ColorPicker.js"></script>
+  <script type="module" crossorigin src="javascripts/common/IsolateZoomHelper.js"></script>
+  <script type="module" crossorigin src="javascripts/common/context-menu/ContextMenuItem.js"></script>
+  <script type="module" crossorigin src="javascripts/desktop/Tree/util.js"></script>
+  <script type="module" crossorigin src="javascripts/common/context-menu/ContextMenu.js"></script>
+  <script type="module" crossorigin src="javascripts/common/RightClickContextMenu.js"></script>
+  <script type="module" crossorigin src="javascripts/desktop/types.js"></script>
+  <script type="module" crossorigin src="javascripts/desktop/ViewerSettings.js"></script>
+  <script type="module" crossorigin src="javascripts/common/cutting-plane/types.js"></script>
+  <script type="module" crossorigin src="javascripts/common/Toolbar.js"></script>
+  <script type="module" crossorigin src="javascripts/common/cutting-plane/BoundingManager.js"></script>
+  <script type="module" crossorigin src="javascripts/common/cutting-plane/CuttingSectionManager.js"></script>
+  <script type="module" crossorigin src="javascripts/common/cutting-plane/FaceSelectionManager.js"></script>
+  <script type="module" crossorigin src="javascripts/common/cutting-plane/PlaneInfoManager.js"></script>
+  <script type="module" crossorigin src="javascripts/common/cutting-plane/StateMachine.js"></script>
+  <script type="module" crossorigin src="javascripts/common/cutting-plane/Controller.js"></script>
+  <script type="module" crossorigin src="javascripts/desktop/PropertyWindow.js"></script>
+  <script type="module" crossorigin src="javascripts/desktop/Tree/types.js"></script>
+  <script type="module" crossorigin src="javascripts/desktop/Tree/VisibilityControl.js"></script>
+  <script type="module" crossorigin src="javascripts/desktop/Tree/TreeControl.js"></script>
+  <script type="module" crossorigin src="javascripts/desktop/Tree/ViewTree.js"></script>
+  <script type="module" crossorigin src="javascripts/desktop/model-browser/ModelBrowserContextMenu.js"></script>
+  <script type="module" crossorigin src="javascripts/desktop/Tree/BcfTree.js"></script>
+  <script type="module" crossorigin src="javascripts/desktop/Tree/CADViewTree.js"></script>
+  <script type="module" crossorigin src="javascripts/desktop/Tree/ConfigurationsTree.js"></script>
+  <script type="module" crossorigin src="javascripts/desktop/Tree/FiltersTree.js"></script>
+  <script type="module" crossorigin src="javascripts/desktop/Tree/LayersTree.js"></script>
+  <script type="module" crossorigin src="javascripts/desktop/Tree/ModelTree.js"></script>
+  <script type="module" crossorigin src="javascripts/desktop/Tree/RelationshipsTree.js"></script>
+  <script type="module" crossorigin src="javascripts/desktop/Tree/SheetsTree.js"></script>
+  <script type="module" crossorigin src="javascripts/desktop/Tree/TypesTree.js"></script>
+  <script type="module" crossorigin src="javascripts/desktop/model-browser/ModelBrowser.js"></script>
+  <script type="module" crossorigin src="javascripts/common/StreamingIndicator.js"></script>
+  <script type="module" crossorigin src="javascripts/common/UiDialog.js"></script>
+  <script type="module" crossorigin src="javascripts/common/TimeoutWarningDialog.js"></script>
+  <script type="module" crossorigin src="javascripts/desktop/DesktopUi.js"></script>
+  <!-- <script type="module" crossorigin src="/demo-app/sc-spawn-service/src/lib/ServiceRequest.js"></script> -->
+  <!-- <script type="module" crossorigin src="/demo-app/sc-spawn-service/src/lib/ServiceResponse.js"></script> -->
+  <!-- <script type="module" crossorigin src="/demo-app/sc-spawn-service/src/lib/ServiceBroker.js"></script> -->
+  <!-- <script type="module" crossorigin src="javascripts/Router.js"></script> -->
+  <!-- <script type="module" crossorigin src="/demo-app/web-viewer-demo/src/main.js"></script> -->
+
   <script type="text/javascript" src="javascripts/conversionService.js"></script>
   <script type="text/javascript" src="javascripts/common/load_scripts.js"></script>
   <script type="text/javascript" src="javascripts/caas.min.js"></script>
+
+
 
 
   <style>
@@ -55,9 +111,9 @@
   <script type="module">
     caasClient.init('https://caas.techsoft3d.com', { accessKey: "64e757dbd8ac93cc087cfab7" });
     await loadDynamicScript()
-    await loadIndividualScript("javascripts/communicator_scripts/web_viewer_ui.js")
-    await loadIndividualScript("javascripts/communicator_scripts/communicator_server_integration.js?v=latest")
-    await loadIndividualScript("javascripts/communicator_scripts/sample.js?v=latest")
+    // await loadIndividualScript("javascripts/communicator_scripts/web_viewer_ui.js")
+    // await loadIndividualScript("javascripts/communicator_scripts/communicator_server_integration.js?v=latest")
+    // await loadIndividualScript("javascripts/communicator_scripts/sample.js?v=latest")
     initializeViewer()
   </script>
 

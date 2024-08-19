@@ -39,7 +39,14 @@ async function fetchVersionNumber() {
 
 async function initializeViewer() {
 
-        var model_name = Sample._getParameterByName("instance");
+        // var model_name = Sample._getParameterByName("instance");
+        const queryString = window.location.search;
+
+        // Create a URLSearchParams object
+        const urlParams = new URLSearchParams(queryString);
+        
+        // Get the value of a specific parameter
+        const model_name = urlParams.get('instance');
         var model_uid = modelUIDs[model_name]
   
         var viewer = await startViewer(model_name, model_uid)
@@ -62,14 +69,14 @@ async function initializeViewer() {
           },
         });
   
-        var screenConfiguration = (md.mobile() !== null) ? Communicator.ScreenConfiguration.Mobile : Sample.screenConfiguration;
-        const uiConfig = {
-          containerId: "content",
-          screenConfiguration: screenConfiguration,
-        };
+        // var screenConfiguration = (md.mobile() !== null) ? Communicator.ScreenConfiguration.Mobile : Sample.screenConfiguration;
+        // const uiConfig = {
+        //   containerId: "content",
+        //   screenConfiguration: screenConfiguration,
+        // };
   
   
-        ui = new Communicator.Ui.Desktop.DesktopUi(viewer, uiConfig);
+        // ui = new Communicator.Ui.Desktop.DesktopUi(viewer, uiConfig);
   
   
         // const ui = new Communicator.Ui.Desktop.DesktopUi(viewer, uiConfig);
