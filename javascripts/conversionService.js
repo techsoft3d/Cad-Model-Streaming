@@ -1,5 +1,5 @@
-import { WebViewer } from "@hoops/web-viewer";
-
+import { WebViewer, ScreenConfiguration } from "@hoops/web-viewer";
+import { DesktopUi } from "./desktop/DesktopUi.js";
 
 var modelUIDs = {
         "landing-gear-main-shaft": "348fb408-6946-4300-ba5a-69d684f4622e",
@@ -19,6 +19,8 @@ async function startViewer(modelName, uid) {
 
         viewer = new WebViewer({
                 containerId: "viewerContainer",
+                showModelBrowser: true,
+    showToolbar: true,
                 endpointUri: sessioninfo.endpointUri,
                 model: modelName,
                 enginePath: `https://cdn.jsdelivr.net/gh/techsoft3d/hoops-web-viewer@2024.4.0`, //${versionNumer}
@@ -71,14 +73,14 @@ export async function initializeViewer() {
           },
         });
   
-        // var screenConfiguration = (md.mobile() !== null) ? Communicator.ScreenConfiguration.Mobile : Sample.screenConfiguration;
-        // const uiConfig = {
-        //   containerId: "content",
-        //   screenConfiguration: screenConfiguration,
-        // };
+        var screenConfiguration = (md.mobile() !== null) ? ScreenConfiguration.Mobile : ScreenConfiguration.screenConfiguration;
+        const uiConfig = {
+          containerId: "content",
+          screenConfiguration: screenConfiguration,
+        };
   
   
-        // ui = new Communicator.Ui.Desktop.DesktopUi(viewer, uiConfig);
+        ui = new DesktopUi(viewer, uiConfig);
   
   
         // const ui = new Communicator.Ui.Desktop.DesktopUi(viewer, uiConfig);
