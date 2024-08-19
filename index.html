@@ -56,10 +56,15 @@
     import * as conversionService from "./javascripts/conversionService.js";
 
 
-    window.onload = function () {
-      conversionService.initializeViewer();
-    };
+    // window.onload = function () {
+    //   conversionService.initializeViewer();
+    // };
 
+    await loadDynamicScript()
+    await loadIndividualScript("javascripts/communicator_scripts/web_viewer_ui.js")
+    // await loadIndividualScript("javascripts/communicator_scripts/communicator_server_integration.js?v=latest")
+    await loadIndividualScript("javascripts/communicator_scripts/sample.js?v=latest")
+    initializeViewer()
     // initializeViewer()
   </script>
   <!-- <script>
