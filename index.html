@@ -1,199 +1,192 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
-  <title>Cad Model Streaming | HOOPS Web Viewer</title>
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="chrome=1;IE=edge" />
   <meta name="viewport" content="user-scalable=no" />
-  <!-- Google Tag Manager -->
-  <script>(function (w, d, s, l, i) {
-      w[l] = w[l] || []; w[l].push({
-        'gtm.start':
-          new Date().getTime(), event: 'gtm.js'
-      }); var f = d.getElementsByTagName(s)[0],
-        j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
-          'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
-    })(window, document, 'script', 'dataLayer', 'GTM-PB9P4KS');</script>
-  <!-- End Google Tag Manager -->
 
-
-  <link rel="stylesheet" href="css/TreeControl.css" />
-  <link rel="stylesheet" href="css/Toolbar.css" />
-  <link rel="stylesheet" href="css/Common.css" />
-  <link rel="stylesheet" href="css/Desktop.css" />
-  <link rel="stylesheet" href="css/Mobile.css" />
-  <link rel="stylesheet" href="css/NoteText.css" />
-  <link rel="stylesheet" href="css/jquery-ui.min.css" />
-  <link rel="stylesheet" href="css/PropertyWindow.css" />
-  <link rel="stylesheet" href="css/ViewerSettings.css" />
-  <link rel="stylesheet" href="css/jquery.minicolors.css" />
-  <link rel="stylesheet" href="css/Relationships.css" />
-  <link rel="stylesheet" href="css/drop-down.css" />
-
-
-
+  <title>Web Viewer Desktop</title>
   <script type="text/javascript" src="javascripts/jquery-3.5.1.min.js"></script>
   <script type="text/javascript" src="javascripts/jquery-ui.min.js"></script>
   <script type="text/javascript" src="javascripts/jquery.ui.touch-punch.min.js"></script>
   <script type="text/javascript" src="javascripts/keymaster.min.js"></script>
   <script type="text/javascript" src="javascripts/iscroll.min.js"></script>
   <script type="text/javascript" src="javascripts/mobile-detect.min.js"></script>
+
+  <script type="text/javascript" src="javascripts/hoops_web_viewer.js?v=<BUILD_ID>" id="hwvScript"></script>
   <script type="text/javascript" src="javascripts/jquery.minicolors.min.js"></script>
+  <script type="text/javascript" src="javascripts/web_viewer_ui.js?v=<BUILD_ID>" id="hwvUI"></script>
+  <!-- <script type="text/javascript" src="js/communicator_server_integration.js?v=<BUILD_ID>"></script> -->
+  <script type="text/javascript" src="javascripts/sample.js?v=<BUILD_ID>"></script>
+
+  <link rel="stylesheet" href="css/TreeControl.css" type="text/css" />
+  <link rel="stylesheet" href="css/Toolbar.css" type="text/css" />
+  <link rel="stylesheet" href="css/Common.css" type="text/css" />
+  <link rel="stylesheet" href="css/Desktop.css" type="text/css" />
+  <link rel="stylesheet" href="css/Mobile.css" type="text/css" />
+  <link rel="stylesheet" href="css/NoteText.css" type="text/css" />
+  <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css" />
+  <link rel="stylesheet" href="css/PropertyWindow.css" type="text/css" />
+  <link rel="stylesheet" href="css/ViewerSettings.css" type="text/css" />
+  <link rel="stylesheet" href="css/jquery.minicolors.css" type="text/css" />
+
+  <script type="text/javascript" src="javascripts/custom.js"></script>
+
+  <script type="text/javascript" id="viewerStartup">
+    var hwv = null;
+    var ui = null;
+    var md = new MobileDetect(window.navigator.userAgent);
+    var pbrManager;
+
+    window.onload = function () {
+      Sample.createViewer().then(
+        function (viewer) {
+          hwv = viewer;
+
+          window.onresize = function (event) {
+            // jQuery resizable triggers onresize, check that the call is not coming from a DOM element object
+            if (typeof event.target.getAttribute !== "function") {
+              hwv.resizeCanvas();
+            }
+          };
+
+          var screenConfiguration =
+            md.mobile() !== null
+              ? Communicator.ScreenConfiguration.Mobile
+              : Sample.screenConfiguration;
+          var uiConfig = {
+            containerId: "content",
+            screenConfiguration: screenConfiguration,
+            showModelBrowser: true,
+            showToolbar: true,
+          };
+
+          ui = new Communicator.Ui.Desktop.DesktopUi(hwv, uiConfig);
+
+          pbrManager = new PBRMaterialManager(hwv);
+
+          hwv.start();
+        },
+        function (errorReason) {
+          var errorDialog = new Communicator.Ui.UiDialog("content");
+          errorDialog.setTitle("Viewer Error");
+          errorDialog.setText(errorReason);
+          errorDialog.show();
+        }
 
 
-  <script type="importmap">
-    {
-      "imports": {
-        "@hoops/web-viewer": "https://cdn.jsdelivr.net/gh/techsoft3d/hoops-web-viewer@2024.4.0/hoops-web-viewer.mjs"
+      );
+
+    };
+
+    class PBRMaterialManager {
+      _viewer;
+      _metallicSlider;
+      _metallicValue;
+      _roughnessSlider;
+      _roughnessValue;
+
+      constructor(viewer) {
+        this._viewer = viewer;
+
+        this._viewer.setCallbacks({
+          assemblyTreeReady: () => {
+            this._init();
+          },
+          selectionArray: (selectionArray) => {
+            this._onSelection(selectionArray);
+          }
+        });
+      }
+
+      _init() {
+        this._viewer.selectionManager.setNodeElementSelectionHighlightMode(Communicator.SelectionHighlightMode.OutlineOnly);
+        this._viewer.selectionManager.setNodeSelectionHighlightMode(Communicator.SelectionHighlightMode.OutlineOnly);
+        this._viewer.selectionManager.setHighlightFaceElementSelection(false);
+        this._viewer.selectionManager.setHighlightLineElementSelection(false);
+
+        this._metallicValue = document.querySelector("#metallic-value");
+        this._metallicSlider = document.querySelector("#metallic-slider");
+        this._metallicSlider.oninput = () => { this._updateValues(); }
+
+        this._roughnessValue = document.querySelector("#roughness-value");
+        this._roughnessSlider = document.querySelector("#roughness-slider");
+        this._roughnessSlider.oninput = () => { this._updateValues(); }
+
+        const applyButton = document.querySelector("#apply-button");
+        applyButton.onclick = () => { this._updateValues(); }
+
+        const unsetButton = document.querySelector("#unset-button");
+        unsetButton.onclick = () => { this._unset() };
+
+        this._setSlidersEnabled(false);
+      }
+
+      _setSlidersEnabled(val) {
+        this._metallicSlider.disabled = !val;
+        this._roughnessSlider.disabled = !val;
+      }
+
+      _onSelection(selectionArray) {
+        if (selectionArray.length === 0) {
+          this._setSlidersEnabled(false);
+          return;
+        }
+
+        this._setSlidersEnabled(true);
+
+        console.log(selectionArray);
+      }
+
+      _updateValues() {
+        this._metallicValue.innerHTML = this._metallicSlider.value;
+        this._roughnessValue.innerHTML = this._roughnessSlider.value;
+
+        const nodeList = this._viewer.selectionManager.getResults().map((item) => item.getNodeId());
+        this._viewer.model.setMetallicRoughness(nodeList, parseFloat(this._metallicSlider.value), parseFloat(this._roughnessSlider.value));
+      }
+
+      _unset() {
+        const nodeList = this._viewer.selectionManager.getResults().map((item) => item.getNodeId());
+        this._viewer.model.unsetMetallicRoughness(nodeList);
       }
     }
   </script>
-
-  <script type="module" src="javascripts/conversionService.js"></script>
-  <script type="text/javascript" src="javascripts/common/load_scripts.js"></script>
-  <script type="text/javascript" src="javascripts/caas.min.js"></script>
-
-  <script type="module">
-    caasClient.init('https://caas.techsoft3d.com', { accessKey: "64e757dbd8ac93cc087cfab7" });
-
-    import * as conversionService from "./javascripts/conversionService.js";
-
-
-    // window.onload = function () {
-    //   conversionService.initializeViewer();
-    // };
-
-    // await loadDynamicScript()
-    // await loadIndividualScript("javascripts/communicator_scripts/web_viewer_ui.js")
-    // await loadIndividualScript("javascripts/communicator_scripts/communicator_server_integration.js?v=latest")
-    // await loadIndividualScript("javascripts/communicator_scripts/sample.js?v=latest")
-    conversionService.initializeViewer()
-    // initializeViewer()
-  </script>
-  <!-- <script>
-    // Determine the version dynamically
-    const libraryVersion = "1.0.0"; // This could be determined by some logic
-
-    // Create the import map
-    const importMap = createImportMap(libraryVersion);
-
-    // Create a script element for the import map
-    const importMapScript = document.createElement('script');
-    importMapScript.type = 'importmap';
-    importMapScript.textContent = JSON.stringify(importMap);
-
-    // Append the import map to the document head
-    document.head.appendChild(importMapScript);
-  </script> -->
-
-  <!-- <script type="module" crossorigin src="/_virtual/modulepreload-polyfill.js"></script> -->
-  <script type="module" crossorigin src="javascripts/common/UiUtil.js"></script>
-  <script type="module" crossorigin src="javascripts/common/ColorPicker.js"></script>
-  <script type="module" crossorigin src="javascripts/common/IsolateZoomHelper.js"></script>
-  <script type="module" crossorigin src="javascripts/common/context-menu/ContextMenuItem.js"></script>
-  <script type="module" crossorigin src="javascripts/desktop/Tree/util.js"></script>
-  <script type="module" crossorigin src="javascripts/common/context-menu/ContextMenu.js"></script>
-  <script type="module" crossorigin src="javascripts/common/RightClickContextMenu.js"></script>
-  <script type="module" crossorigin src="javascripts/desktop/types.js"></script>
-  <script type="module" crossorigin src="javascripts/desktop/ViewerSettings.js"></script>
-  <script type="module" crossorigin src="javascripts/common/cutting-plane/types.js"></script>
-  <script type="module" crossorigin src="javascripts/common/Toolbar.js"></script>
-  <script type="module" crossorigin src="javascripts/common/cutting-plane/BoundingManager.js"></script>
-  <script type="module" crossorigin src="javascripts/common/cutting-plane/CuttingSectionManager.js"></script>
-  <script type="module" crossorigin src="javascripts/common/cutting-plane/FaceSelectionManager.js"></script>
-  <script type="module" crossorigin src="javascripts/common/cutting-plane/PlaneInfoManager.js"></script>
-  <script type="module" crossorigin src="javascripts/common/cutting-plane/StateMachine.js"></script>
-  <script type="module" crossorigin src="javascripts/common/cutting-plane/Controller.js"></script>
-  <script type="module" crossorigin src="javascripts/desktop/PropertyWindow.js"></script>
-  <script type="module" crossorigin src="javascripts/desktop/Tree/types.js"></script>
-  <script type="module" crossorigin src="javascripts/desktop/Tree/VisibilityControl.js"></script>
-  <script type="module" crossorigin src="javascripts/desktop/Tree/TreeControl.js"></script>
-  <script type="module" crossorigin src="javascripts/desktop/Tree/ViewTree.js"></script>
-  <script type="module" crossorigin src="javascripts/desktop/model-browser/ModelBrowserContextMenu.js"></script>
-  <script type="module" crossorigin src="javascripts/desktop/Tree/BcfTree.js"></script>
-  <script type="module" crossorigin src="javascripts/desktop/Tree/CADViewTree.js"></script>
-  <script type="module" crossorigin src="javascripts/desktop/Tree/ConfigurationsTree.js"></script>
-  <script type="module" crossorigin src="javascripts/desktop/Tree/FiltersTree.js"></script>
-  <script type="module" crossorigin src="javascripts/desktop/Tree/LayersTree.js"></script>
-  <script type="module" crossorigin src="javascripts/desktop/Tree/ModelTree.js"></script>
-  <script type="module" crossorigin src="javascripts/desktop/Tree/RelationshipsTree.js"></script>
-  <script type="module" crossorigin src="javascripts/desktop/Tree/SheetsTree.js"></script>
-  <script type="module" crossorigin src="javascripts/desktop/Tree/TypesTree.js"></script>
-  <script type="module" crossorigin src="javascripts/desktop/model-browser/ModelBrowser.js"></script>
-  <script type="module" crossorigin src="javascripts/common/StreamingIndicator.js"></script>
-  <script type="module" crossorigin src="javascripts/common/UiDialog.js"></script>
-  <script type="module" crossorigin src="javascripts/common/TimeoutWarningDialog.js"></script>
-  <script type="module" crossorigin src="javascripts/desktop/DesktopUi.js"></script>
-  <!-- <script type="module" crossorigin src="/demo-app/sc-spawn-service/src/lib/ServiceRequest.js"></script> -->
-  <!-- <script type="module" crossorigin src="/demo-app/sc-spawn-service/src/lib/ServiceResponse.js"></script> -->
-  <!-- <script type="module" crossorigin src="/demo-app/sc-spawn-service/src/lib/ServiceBroker.js"></script> -->
-  <!-- <script type="module" crossorigin src="javascripts/Router.js"></script> -->
-  <!-- <script type="module" crossorigin src="/demo-app/web-viewer-demo/src/main.js"></script> -->
-
-
-
-
-
-
-
-
   <style>
-    #citation {
-      position: fixed;
-      bottom: 5px;
-      right: 5px;
-      font-size: 10px;
-      color: #777;
+    #pbr-editor {
+      position: absolute;
+      background-color: rgb(100, 100, 100);
+      color: white;
+      width: 300px;
+      height: 100px;
+      padding: 5px;
+      top: 10px;
+      right: 50%;
+    }
+
+    #pbr-editor input,
+    #pbr-editor button {
+      margin: 0px 5px;
+    }
+
+    #pbr-editor div {
+      margin: 5px 0px;
     }
   </style>
-
-
-
 </head>
 
 <body>
-  <!-- Google Tag Manager (noscript) -->
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PB9P4KS" height="0" width="0"
-      style="display:none;visibility:hidden"></iframe></noscript>
-  <!-- End Google Tag Manager (noscript) -->
   <div id="content">
-    <div class="dropdown">
-      <button class="drop-button">Models</button>
-      <div class="dropdown-content">
-        <a href="?instance=landing-gear-main-shaft" style="width: 90%; float: left">
-          <img src="images/landing-gear2.png" alt="Landing Gear Main Shaft" style="float: left" />
-          <div class="dropdown-text" style="width: 50%; float: right">
-            Landing Gear Shaft
-          </div>
-        </a>
-        <a href="?instance=microengine" style="width: 90%; float: left">
-          <img src="images/micro-engine.png" alt="Microengine" style="float: left" />
-          <div class="dropdown-text" style="width: 50%; float: right">
-            Microengine
-          </div>
-        </a>
-        <a href="?instance=wren-mw54-turbo-jet" style="width: 90%; float: left">
-          <img src="images/turbo-engine.png" alt="Turbine Engine" style="float: left" />
-          <div class="dropdown-text" style="width: 50%; float: right">
-            Wren Turbo Jet
-          </div>
-        </a>
-        <a href="?instance=ferrari-engine-v12" style="width: 90%; float: left">
-          <img src="images/ferrari-v12.png" alt="Ferrari Engine" style="float: left" />
-          <div class="dropdown-text" style="width: 50%; float: right">
-            Ferrari V12
-          </div>
-        </a>
-        <a href="?instance=Ducati900SS-cafe-racer" style="width: 90%; float: left">
-          <img src="images/ducati2.png" alt="Ducati Cafe Racer" style="float: left" />
-          <div class="dropdown-text" style="width: 50%; float: right">
-            Ducati Cafe Racer
-          </div>
-        </a>
-      </div>
-    </div>
     <div id="viewerContainer"></div>
+    <div id="pbr-editor">
+      <div><label for="metallic-slider">Metallic</label><input id="metallic-slider" type="range" min="0.0" max="1.0"
+          step="0.01" value="1.0" /> <span id="metallic-value">1.0</span></div>
+      <div><label for="roughness-slider">Roughness</label><input id="roughness-slider" type="range" min="0.0" max="1.0"
+          step="0.01" value="0.5" /> <span id="roughness-value">0.5</span></div>
+      <div><button id="apply-button">Apply</button><button id="unset-button">Unset</button></div>
+      <button id="add-models" onclick="loadModels()">Add Models</button>
+    </div>
     <!-- Toolbar HTML-->
     <div id="toolBar">
       <div class="toolbar-tools">
@@ -665,17 +658,15 @@
             <div class="settings-block">
               <label>Projection Mode:</label>
               <select id="settings-projection-mode" class="right-align">
-                <option value="1">Orthographic</option>
-                <option value="0">Perspective</option>
+                <option value="0">Orthographic</option>
+                <option value="1">Perspective</option>
               </select>
               <span class="clear-both"></span>
             </div>
             <div class="settings-block">
-              <div id="settings-block-framerate" class="settings-block draw-strategy-setting">
-                <span class="framerate-text">Framerate (fps):</span>
-                <input type="number" min="0" id="settings-framerate" class="right-align" />
-                <span class="clear-both"></span>
-              </div>
+              <span class="framerate-text">Framerate (fps):</span>
+              <input type="number" min="0" id="settings-framerate" class="right-align" />
+              <span class="clear-both"></span>
             </div>
             <div class="settings-block">
               <span>Hidden Line Opacity (0-1): </span>
@@ -900,7 +891,6 @@
       </div>
     </div>
   </div>
-
 </body>
 
 </html>
