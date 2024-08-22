@@ -1,4 +1,7 @@
-modelUIDs = {
+import { WebViewer, ScreenConfiguration } from "@hoops/web-viewer";
+import { DesktopUi } from "./desktop/DesktopUi.js";
+
+var modelUIDs = {
         "landing-gear-main-shaft": "348fb408-6946-4300-ba5a-69d684f4622e",
         "microengine": "b1891f18-8ea9-4b7d-8d7a-0dfa52dc4458",
         "wren-mw54-turbo-jet": "3d59b1fb-5fc7-4139-9aa4-829eadc30ed8",
@@ -8,19 +11,17 @@ modelUIDs = {
 
 
 async function startViewer(modelName, uid) {
-   
         var viewer;
 
-//        let sessioninfo = await caasClient.getStreamingSession();
-//        await caasClient.enableStreamAccess(sessioninfo.sessionid, [uid]);
         let sessioninfo = await caasClient.getStreamingSession({accessItems:[uid]});
 
-        viewer = new Communicator.WebViewer({
+        viewer = new WebViewer({
                 containerId: "viewerContainer",
+                showModelBrowser: true,
+    showToolbar: true,
                 endpointUri: sessioninfo.endpointUri,
                 model: modelName,
-                enginePath: `https://cdn.jsdelivr.net/gh/techsoft3d/hoops-web-viewer@20${versionNumer}`,
-                // enginePath: `https://cdn.jsdelivr.net/gh/techsoft3d/hoops-web-viewer@20${versionNumer}`,
+                enginePath: `https://cdn.jsdelivr.net/gh/techsoft3d/hoops-web-viewer@latest`, 
                 rendererType: 0
         });
 
@@ -29,7 +30,7 @@ async function startViewer(modelName, uid) {
 
 }
 
-async function fetchVersionNumber() {
+export async function fetchVersionNumber() {
         let data = await caasClient.getHCVersion();
         versionNumer = data;        
         return data
@@ -37,9 +38,16 @@ async function fetchVersionNumber() {
 
 
 
-async function initializeViewer() {
+export async function initializeViewer() {
 
-        var model_name = Sample._getParameterByName("instance");
+        // var model_name = Sample._getParameterByName("instance");
+        const queryString = window.location.search;
+
+        // Create a URLSearchParams object
+        const urlParams = new URLSearchParams(queryString);
+        
+        // Get the value of a specific parameter
+        const model_name = urlParams.get('instance');
         var model_uid = modelUIDs[model_name]
   
         var viewer = await startViewer(model_name, model_uid)
@@ -62,14 +70,14 @@ async function initializeViewer() {
           },
         });
   
-        var screenConfiguration = (md.mobile() !== null) ? Communicator.ScreenConfiguration.Mobile : Sample.screenConfiguration;
+        var screenConfiguration = (md.mobile() !== null) ? ScreenConfiguration.Mobile : ScreenConfiguration.screenConfiguration;
         const uiConfig = {
           containerId: "content",
           screenConfiguration: screenConfiguration,
         };
   
   
-        ui = new Communicator.Ui.Desktop.DesktopUi(viewer, uiConfig);
+        ui = new DesktopUi(viewer, uiConfig);
   
   
         // const ui = new Communicator.Ui.Desktop.DesktopUi(viewer, uiConfig);
@@ -88,4 +96,12 @@ async function initializeViewer() {
         console.log("Load time = " + (end - start) / 1000.0 + " seconds.");
   
         $(".dropdown").css("display", "inline-block");
+}
+
+export function createImportMap(version) {
+        return {
+          imports: {
+            "my-library": `https://cdn.example.com/my-library@${version}/index.js`
+          }
+        };
 }

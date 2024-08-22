@@ -17,29 +17,87 @@
     })(window, document, 'script', 'dataLayer', 'GTM-PB9P4KS');</script>
   <!-- End Google Tag Manager -->
 
-  <link rel="stylesheet" href="stylesheets/TreeControl.css" />
-  <link rel="stylesheet" href="stylesheets/Toolbar.css" />
-  <link rel="stylesheet" href="stylesheets/Common.css" />
-  <link rel="stylesheet" href="stylesheets/Desktop.css" />
-  <link rel="stylesheet" href="stylesheets/NoteText.css" />
-  <link rel="stylesheet" href="stylesheets/PropertyWindow.css" />
-  <link rel="stylesheet" href="stylesheets/ViewerSettings.css" />
-  <link rel="stylesheet" href="stylesheets/jquery.minicolors.css" />
-  <link rel="stylesheet" href="stylesheets/jquery-ui.min.css" />
-  <link rel="stylesheet" href="stylesheets/demos-common.css" />
-  <link rel="stylesheet" href="stylesheets/drop-down.css" />
+
+  <link rel="stylesheet" href="css/TreeControl.css" />
+  <link rel="stylesheet" href="css/Toolbar.css" />
+  <link rel="stylesheet" href="css/Common.css" />
+  <link rel="stylesheet" href="css/Desktop.css" />
+  <link rel="stylesheet" href="css/Mobile.css" />
+  <link rel="stylesheet" href="css/NoteText.css" />
+  <link rel="stylesheet" href="css/jquery-ui.min.css" />
+  <link rel="stylesheet" href="css/PropertyWindow.css" />
+  <link rel="stylesheet" href="css/ViewerSettings.css" />
+  <link rel="stylesheet" href="css/jquery.minicolors.css" />
+  <link rel="stylesheet" href="css/Relationships.css" />
+  <link rel="stylesheet" href="css/drop-down.css" />
 
 
-  <script type="text/javascript" src="javascripts/communicator_scripts/jquery-3.3.1.min.js"></script>
+
+  <script type="text/javascript" src="javascripts/jquery-3.5.1.min.js"></script>
   <script type="text/javascript" src="javascripts/jquery-ui.min.js"></script>
   <script type="text/javascript" src="javascripts/jquery.ui.touch-punch.min.js"></script>
-  <script type="text/javascript" src="javascripts/communicator_scripts/jquery.minicolors.min.js"></script>
-  <script type="text/javascript" src="javascripts/communicator_scripts/keymaster.min.js"></script>
-  <script type="text/javascript" src="javascripts/communicator_scripts/iscroll.min.js"></script>
+  <script type="text/javascript" src="javascripts/keymaster.min.js"></script>
+  <script type="text/javascript" src="javascripts/iscroll.min.js"></script>
   <script type="text/javascript" src="javascripts/mobile-detect.min.js"></script>
-  <script type="text/javascript" src="javascripts/conversionService.js"></script>
+  <script type="text/javascript" src="javascripts/jquery.minicolors.min.js"></script>
+
+
+
+  <script type="importmap">
+    {
+      "imports": {
+        "@hoops/web-viewer": "https://cdn.jsdelivr.net/gh/techsoft3d/hoops-web-viewer@latest/hoops-web-viewer.mjs"
+      }
+    }
+  </script>
+
+  <script type="module" src="javascripts/conversionService.js"></script>
   <script type="text/javascript" src="javascripts/common/load_scripts.js"></script>
   <script type="text/javascript" src="javascripts/caas.min.js"></script>
+
+  <script type="module">
+    caasClient.init('https://caas.techsoft3d.com', { accessKey: "64e757dbd8ac93cc087cfab7" });
+    import * as conversionService from "./javascripts/conversionService.js";
+    conversionService.initializeViewer()
+  </script>
+
+  <script type="module" crossorigin src="javascripts/common/UiUtil.js"></script>
+  <script type="module" crossorigin src="javascripts/common/ColorPicker.js"></script>
+  <script type="module" crossorigin src="javascripts/common/IsolateZoomHelper.js"></script>
+  <script type="module" crossorigin src="javascripts/common/context-menu/ContextMenuItem.js"></script>
+  <script type="module" crossorigin src="javascripts/desktop/Tree/util.js"></script>
+  <script type="module" crossorigin src="javascripts/common/context-menu/ContextMenu.js"></script>
+  <script type="module" crossorigin src="javascripts/common/RightClickContextMenu.js"></script>
+  <script type="module" crossorigin src="javascripts/desktop/types.js"></script>
+  <script type="module" crossorigin src="javascripts/desktop/ViewerSettings.js"></script>
+  <script type="module" crossorigin src="javascripts/common/cutting-plane/types.js"></script>
+  <script type="module" crossorigin src="javascripts/common/Toolbar.js"></script>
+  <script type="module" crossorigin src="javascripts/common/cutting-plane/BoundingManager.js"></script>
+  <script type="module" crossorigin src="javascripts/common/cutting-plane/CuttingSectionManager.js"></script>
+  <script type="module" crossorigin src="javascripts/common/cutting-plane/FaceSelectionManager.js"></script>
+  <script type="module" crossorigin src="javascripts/common/cutting-plane/PlaneInfoManager.js"></script>
+  <script type="module" crossorigin src="javascripts/common/cutting-plane/StateMachine.js"></script>
+  <script type="module" crossorigin src="javascripts/common/cutting-plane/Controller.js"></script>
+  <script type="module" crossorigin src="javascripts/desktop/PropertyWindow.js"></script>
+  <script type="module" crossorigin src="javascripts/desktop/Tree/types.js"></script>
+  <script type="module" crossorigin src="javascripts/desktop/Tree/VisibilityControl.js"></script>
+  <script type="module" crossorigin src="javascripts/desktop/Tree/TreeControl.js"></script>
+  <script type="module" crossorigin src="javascripts/desktop/Tree/ViewTree.js"></script>
+  <script type="module" crossorigin src="javascripts/desktop/model-browser/ModelBrowserContextMenu.js"></script>
+  <script type="module" crossorigin src="javascripts/desktop/Tree/BcfTree.js"></script>
+  <script type="module" crossorigin src="javascripts/desktop/Tree/CADViewTree.js"></script>
+  <script type="module" crossorigin src="javascripts/desktop/Tree/ConfigurationsTree.js"></script>
+  <script type="module" crossorigin src="javascripts/desktop/Tree/FiltersTree.js"></script>
+  <script type="module" crossorigin src="javascripts/desktop/Tree/LayersTree.js"></script>
+  <script type="module" crossorigin src="javascripts/desktop/Tree/ModelTree.js"></script>
+  <script type="module" crossorigin src="javascripts/desktop/Tree/RelationshipsTree.js"></script>
+  <script type="module" crossorigin src="javascripts/desktop/Tree/SheetsTree.js"></script>
+  <script type="module" crossorigin src="javascripts/desktop/Tree/TypesTree.js"></script>
+  <script type="module" crossorigin src="javascripts/desktop/model-browser/ModelBrowser.js"></script>
+  <script type="module" crossorigin src="javascripts/common/StreamingIndicator.js"></script>
+  <script type="module" crossorigin src="javascripts/common/UiDialog.js"></script>
+  <script type="module" crossorigin src="javascripts/common/TimeoutWarningDialog.js"></script>
+  <script type="module" crossorigin src="javascripts/desktop/DesktopUi.js"></script>
 
 
   <style>
@@ -52,14 +110,7 @@
     }
   </style>
 
-  <script type="module">
-    caasClient.init('https://caas.techsoft3d.com', { accessKey: "64e757dbd8ac93cc087cfab7" });
-    await loadDynamicScript()
-    await loadIndividualScript("javascripts/communicator_scripts/web_viewer_ui.js")
-    await loadIndividualScript("javascripts/communicator_scripts/communicator_server_integration.js?v=latest")
-    await loadIndividualScript("javascripts/communicator_scripts/sample.js?v=latest")
-    initializeViewer()
-  </script>
+
 
 </head>
 
@@ -317,7 +368,7 @@
           </table>
         </div>
         <div id="explode-slider" class="toolbar-submenu slider-menu submenus">
-          <div id="explosion-slider" style="height:90px;" class="toolbar-slider"></div>
+          <div id="explosion-slider" style="height: 90px" class="toolbar-slider"></div>
         </div>
         <div id="cuttingplane-submenu" class="toolbar-submenu cutting-plane submenus no-modal">
           <table>
@@ -366,12 +417,99 @@
     <div id="viewer-settings-dialog-container">
       <!-- Viewer Settings Window -->
       <div id="viewer-settings-dialog" class="hoops-ui-window">
-
         <!-- Header -->
         <div class="hoops-ui-window-header">
           <span class="tab selected" id="settings-tab-label-general">General</span>
           <span class="tab" id="settings-tab-label-walk">Walk</span>
           <span class="tab" id="settings-tab-label-drawing">Drawing</span>
+          <span class="tab" id="settings-tab-label-floorplan">Floorplan</span>
+        </div>
+
+        <!-- Floorplan tab-->
+        <div class="hoops-ui-window-body" id="settings-tab-floorplan">
+          <div class="settings-group-header">Floorplan</div>
+          <div class="settings-group settings-group-general">
+            <div class="settings-block">
+              <span id="settings-floorplan-active-text">Active:</span>
+              <input type="checkbox" id="settings-floorplan-active" class="right-align" />
+              <span class="clear-both"></span>
+            </div>
+            <div class="settings-block">
+              <span id="settings-floorplan-track-camera-text">Track Camera:</span>
+              <input type="checkbox" id="settings-floorplan-track-camera" class="right-align" />
+              <span class="clear-both"></span>
+            </div>
+            <div class="settings-block">
+              <span id="settings-floorplan-orientation-text">Orientation:</span>
+              <select id="settings-floorplan-orientation" class="right-align">
+                <option value="0">North Up</option>
+                <option value="1">Avatar Up</option>
+              </select>
+              <span class="clear-both"></span>
+            </div>
+            <div class="settings-block">
+              <span id="settings-floorplan-auto-activate-text">Auto Activation:</span>
+              <select id="settings-floorplan-auto-activate" class="right-align">
+                <option value="0">Bim</option>
+                <option value="1">Bim + Walk</option>
+                <option value="2">Never</option>
+              </select>
+              <span class="clear-both"></span>
+            </div>
+            <div class="settings-block">
+              <span id="settings-floorplan-feet-per-pixel-style">
+                <span id="settings-floorplan-feet-per-pixel-text">Overlay Feet per Pixel:</span>
+                <input type="number" min="0" step=".1" id="settings-floorplan-feet-per-pixel" class="right-align" />
+              </span>
+            </div>
+            <div class="settings-block">
+              <span id="settings-floorplan-zoom-style">
+                <span id="settings-floorplan-zoom-text">Overlay Zoom Level:</span>
+                <input type="number" min="0" max="10" step=".1" id="settings-floorplan-zoom" class="right-align" />
+              </span>
+            </div>
+            <div class="settings-block">
+              <span id="settings-floorplan-background-opacity-text">Overlay Background Opacity:</span>
+              <input type="number" min="0" max="1" step=".01" id="settings-floorplan-background-opacity"
+                class="right-align" />
+              <span class="clear-both"></span>
+            </div>
+            <div class="settings-block">
+              <span id="settings-floorplan-border-opacity-text">Overlay Border Opacity:</span>
+              <input type="number" min="0" max="1" step=".01" id="settings-floorplan-border-opacity"
+                class="right-align" />
+              <span class="clear-both"></span>
+            </div>
+            <div class="settings-block">
+              <span id="settings-floorplan-avatar-opacity-text">Avatar Opacity:</span>
+              <input type="number" min="0" max="1" step=".01" id="settings-floorplan-avatar-opacity"
+                class="right-align" />
+              <span class="clear-both"></span>
+            </div>
+            <div class="settings-block">
+              <div>Floorplan Colors:</div>
+              <div>
+                <input type="text" id="settings-floorplan-background-color" class="color-picker"
+                  data-position="bottom left" />
+                <label>Background</label>
+              </div>
+              <div>
+                <input type="text" id="settings-floorplan-border-color" class="color-picker"
+                  data-position="bottom left" />
+                <label>Border</label>
+              </div>
+              <div>
+                <input type="text" id="settings-floorplan-avatar-color" class="color-picker"
+                  data-position="bottom left" />
+                <label>Avatar</label>
+              </div>
+              <div>
+                <input type="text" id="settings-floorplan-avatar-outline-color" class="color-picker"
+                  data-position="bottom left" />
+                <label>Avatar Outline</label>
+              </div>
+            </div>
+          </div>
         </div>
 
         <!-- Drawing tab -->
@@ -417,8 +555,7 @@
             <div class="settings-block" id="walk-navigation-keys">
               <div id="walk-navigation-text" class="center-align bold">Navigation Keys</div>
               <div>
-                <span id="walk-key-forward">W</span> /
-                <span id="walk-key-left">A</span> /
+                <span id="walk-key-forward">W</span> / <span id="walk-key-left">A</span> /
                 <span id="walk-key-backward">S</span> /
                 <span id="walk-key-right">D</span>
                 <span class="right-align">Move</span>
@@ -442,7 +579,6 @@
                 <span id="walk-key-toggle-collision">V</span>
                 <span class="right-align">Toggle Collision Detection</span>
               </div>
-
             </div>
 
             <div class="settings-block">
@@ -491,15 +627,17 @@
             <div class="settings-block">
               <label>Projection Mode:</label>
               <select id="settings-projection-mode" class="right-align">
-                <option value="0">Orthographic</option>
-                <option value="1">Perspective</option>
+                <option value="1">Orthographic</option>
+                <option value="0">Perspective</option>
               </select>
               <span class="clear-both"></span>
             </div>
             <div class="settings-block">
-              <span class="framerate-text">Framerate (fps):</span>
-              <input type="number" min="0" id="settings-framerate" class="right-align" />
-              <span class="clear-both"></span>
+              <div id="settings-block-framerate" class="settings-block draw-strategy-setting">
+                <span class="framerate-text">Framerate (fps):</span>
+                <input type="number" min="0" id="settings-framerate" class="right-align" />
+                <span class="clear-both"></span>
+              </div>
             </div>
             <div class="settings-block">
               <span>Hidden Line Opacity (0-1): </span>
@@ -536,13 +674,12 @@
           <!-- effects -->
           <div class="settings-group-header">Effects</div>
           <div class="settings-group settings-group-general">
-
             <div class="settings-block">
               <span>Enable Ambient Occlusion:</span>
               <input type="checkbox" id="settings-ambient-occlusion" />
               <input id="settings-ambient-occlusion-radius" type="number" min="0" max="10" step=".01"
                 class="right-align" />
-              <div class="right-align">Radius: </div>
+              <div class="right-align">Radius:</div>
               <span class="clear-both"></span>
             </div>
 
@@ -596,7 +733,6 @@
                   disabled />
               </span>
             </div>
-
           </div>
 
           <!-- axis -->
@@ -712,21 +848,21 @@
         </div>
       </div>
     </div>
+  </div>
 
-    <div id="snapshot-dialog" class="hoops-ui-window">
-      <div class="hoops-ui-window-header">Snapshot</div>
-      <div class="hoops-ui-window-body">
-        <img id="snapshot-dialog-image" class="snapshot-image" alt="Snapshot" />
-        <div class="snapshot-text">Right Click to Save image</div>
-      </div>
-      <div class="hoops-ui-window-footer">
-        <div class="hoops-ui-footer-buttons">
-          <button id="snapshot-dialog-cancel-button">Close</button>
-        </div>
+  <div id="snapshot-dialog" class="hoops-ui-window">
+    <div class="hoops-ui-window-header">Snapshot</div>
+    <div class="hoops-ui-window-body">
+      <img id="snapshot-dialog-image" class="snapshot-image" alt="Snapshot" />
+      <div class="snapshot-text">Right Click to Save image</div>
+    </div>
+    <div class="hoops-ui-window-footer">
+      <div class="hoops-ui-footer-buttons">
+        <button id="snapshot-dialog-cancel-button">Close</button>
       </div>
     </div>
-    <div id="citation"></div>
   </div>
+
 </body>
 
 </html>
