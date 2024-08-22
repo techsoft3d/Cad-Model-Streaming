@@ -13,8 +13,6 @@ var modelUIDs = {
 async function startViewer(modelName, uid) {
         var viewer;
 
-//        let sessioninfo = await caasClient.getStreamingSession();
-//        await caasClient.enableStreamAccess(sessioninfo.sessionid, [uid]);
         let sessioninfo = await caasClient.getStreamingSession({accessItems:[uid]});
 
         viewer = new WebViewer({
@@ -23,8 +21,7 @@ async function startViewer(modelName, uid) {
     showToolbar: true,
                 endpointUri: sessioninfo.endpointUri,
                 model: modelName,
-                enginePath: `https://cdn.jsdelivr.net/gh/techsoft3d/hoops-web-viewer@2024.4.0`, //${versionNumer}
-                // enginePath: `https://cdn.jsdelivr.net/gh/techsoft3d/hoops-web-viewer@20${versionNumer}`,
+                enginePath: `https://cdn.jsdelivr.net/gh/techsoft3d/hoops-web-viewer@latest`, 
                 rendererType: 0
         });
 

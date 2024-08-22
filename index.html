@@ -42,10 +42,11 @@
   <script type="text/javascript" src="javascripts/jquery.minicolors.min.js"></script>
 
 
+
   <script type="importmap">
     {
       "imports": {
-        "@hoops/web-viewer": "https://cdn.jsdelivr.net/gh/techsoft3d/hoops-web-viewer@2024.4.0/hoops-web-viewer.mjs"
+        "@hoops/web-viewer": "https://cdn.jsdelivr.net/gh/techsoft3d/hoops-web-viewer@latest/hoops-web-viewer.mjs"
       }
     }
   </script>
@@ -56,38 +57,10 @@
 
   <script type="module">
     caasClient.init('https://caas.techsoft3d.com', { accessKey: "64e757dbd8ac93cc087cfab7" });
-
     import * as conversionService from "./javascripts/conversionService.js";
-
-
-    // window.onload = function () {
-    //   conversionService.initializeViewer();
-    // };
-
-    // await loadDynamicScript()
-    // await loadIndividualScript("javascripts/communicator_scripts/web_viewer_ui.js")
-    // await loadIndividualScript("javascripts/communicator_scripts/communicator_server_integration.js?v=latest")
-    // await loadIndividualScript("javascripts/communicator_scripts/sample.js?v=latest")
     conversionService.initializeViewer()
-    // initializeViewer()
   </script>
-  <!-- <script>
-    // Determine the version dynamically
-    const libraryVersion = "1.0.0"; // This could be determined by some logic
 
-    // Create the import map
-    const importMap = createImportMap(libraryVersion);
-
-    // Create a script element for the import map
-    const importMapScript = document.createElement('script');
-    importMapScript.type = 'importmap';
-    importMapScript.textContent = JSON.stringify(importMap);
-
-    // Append the import map to the document head
-    document.head.appendChild(importMapScript);
-  </script> -->
-
-  <!-- <script type="module" crossorigin src="/_virtual/modulepreload-polyfill.js"></script> -->
   <script type="module" crossorigin src="javascripts/common/UiUtil.js"></script>
   <script type="module" crossorigin src="javascripts/common/ColorPicker.js"></script>
   <script type="module" crossorigin src="javascripts/common/IsolateZoomHelper.js"></script>
@@ -125,17 +98,6 @@
   <script type="module" crossorigin src="javascripts/common/UiDialog.js"></script>
   <script type="module" crossorigin src="javascripts/common/TimeoutWarningDialog.js"></script>
   <script type="module" crossorigin src="javascripts/desktop/DesktopUi.js"></script>
-  <!-- <script type="module" crossorigin src="/demo-app/sc-spawn-service/src/lib/ServiceRequest.js"></script> -->
-  <!-- <script type="module" crossorigin src="/demo-app/sc-spawn-service/src/lib/ServiceResponse.js"></script> -->
-  <!-- <script type="module" crossorigin src="/demo-app/sc-spawn-service/src/lib/ServiceBroker.js"></script> -->
-  <!-- <script type="module" crossorigin src="javascripts/Router.js"></script> -->
-  <!-- <script type="module" crossorigin src="/demo-app/web-viewer-demo/src/main.js"></script> -->
-
-
-
-
-
-
 
 
   <style>
