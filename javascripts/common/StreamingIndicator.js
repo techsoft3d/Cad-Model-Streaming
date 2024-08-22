@@ -11,7 +11,7 @@ class StreamingIndicator {
     __publicField(this, "_container");
     __publicField(this, "_bottomLeftOffset", new Point2(10, 10));
     __publicField(this, "_opacity", 0.5);
-    __publicField(this, "_spinnerImageUrl", "/css/images/spinner.gif");
+    __publicField(this, "_spinnerImageUrl", "css/images/spinner.gif");
     __publicField(this, "_spinnerSize", new Point2(31, 31));
     this._viewer = viewer;
     this._container = document.getElementById(elementId);
