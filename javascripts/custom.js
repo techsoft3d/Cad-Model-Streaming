@@ -341,7 +341,14 @@ cameraViews = {
 
 
 function setView(val) {
-    var model_name = Sample._getParameterByName("instance");
+    const queryString = window.location.search;
+
+// Create a URLSearchParams object
+const urlParams = new URLSearchParams(queryString);
+
+// Get the value of a specific parameter
+const model_name = urlParams.get('instance');
+    // var model_name = Sample._getParameterByName("instance");
     var availableSheets = viewer.sheetManager.getSheetIds();
 
     if (availableSheets[0] == viewer.sheetManager._activeSheetId) {
