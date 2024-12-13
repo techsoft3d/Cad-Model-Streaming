@@ -1,4 +1,4 @@
-import { WebViewer, ScreenConfiguration } from "@hoops/web-viewer";
+import { WebViewer, ScreenConfiguration, Camera} from "@hoops/web-viewer";
 import { DesktopUi } from "./desktop/DesktopUi.js";
 
 var modelUIDs = {
@@ -19,8 +19,8 @@ async function startViewer(modelName, uid) {
                 containerId: "viewerContainer",
                 showModelBrowser: true,
     showToolbar: true,
-                endpointUri: sessioninfo.endpointUri,
-                model: modelName,
+                endpointUri: "model/snowmanv4.scs",//.endpointUri,
+                // model: modelName,
                 enginePath: `https://cdn.jsdelivr.net/gh/techsoft3d/hoops-web-viewer@latest`, 
                 rendererType: 0
         });
@@ -67,7 +67,12 @@ export async function initializeViewer() {
             console.log("Load time = " + (end - start) / 1000.0 + " seconds.");
   
             $(".dropdown").css("display", "inline-block");
+            
           },
+          firstModelLoaded: async function (){
+            await animate(viewer);
+            console.log("done")
+          }
         });
   
         var screenConfiguration = (md.mobile() !== null) ? ScreenConfiguration.Mobile : ScreenConfiguration.screenConfiguration;
@@ -96,7 +101,62 @@ export async function initializeViewer() {
         console.log("Load time = " + (end - start) / 1000.0 + " seconds.");
   
         $(".dropdown").css("display", "inline-block");
+
+        return viewer
 }
+
+
+function animate(viewer){
+  var animationArray = [26,
+  30,
+  34,
+  42,
+  38,
+  46,
+  50,
+  58,
+  54,
+  62,
+  114,
+  71, 77,
+  109, 103,
+  66,
+  86,
+  82,
+  90,
+  94,
+  98]
+
+    // console.log(node)
+    viewer.model.setNodesOpacity(animationArray, 0);
+    var myJson = cameraPositions[0]; 
+    viewer.view.setCamera(Camera.fromJson(myJson));
+
+  for(let i = 0; i < animationArray.length; i++){
+    setTimeout(() => {
+      gradualFade(viewer, animationArray[i] )
+    }, i * 1000); 
+      
+ 
+  }
+
+  // viewer.view.setCamera(Camera.fromJson(cameraPositions[1]));
+}
+
+
+function gradualFade(viewer, nodeId){  
+  for (let i = 0; i < 200; i++) {
+    setTimeout(() => {
+      viewer.model.setNodesOpacity([nodeId], (i+1)/200);
+    }, i * 10); 
+  }
+  
+}
+
+function setOpacity(viewer, nodeId, i){
+  viewer.model.setNodesOpacity([nodeId], i);
+}
+
 
 export function createImportMap(version) {
         return {
@@ -105,3 +165,49 @@ export function createImportMap(version) {
           }
         };
 }
+
+var cameraPositions = [
+  {
+    "position": {
+        "x": 77.55606063094437,
+        "y": 29.2415316187382,
+        "z": -24.412596410685186
+    },
+    "target": {
+        "x": 0.7845520083670319,
+        "y": 30.510064125078824,
+        "z": 0.936962703171646
+    },
+    "up": {
+        "x": 0.01827439624944371,
+        "y": 0.999818899546433,
+        "z": 0.005311737143175735
+    },
+    "width": 80.85835477981051,
+    "height": 80.85835477981051,
+    "projection": 1,
+    "nearLimit": 0.01,
+    "className": "Communicator.Camera"
+},
+{
+  "position": {
+      "x": 108.00377628266209,
+      "y": 41.03596425900575,
+      "z": -39.8915499310305
+  },
+  "target": {
+      "x": 0.6048177533574335,
+      "y": 29.77338945663782,
+      "z": -0.3531503602596058
+  },
+  "up": {
+      "x": -0.08897932333277901,
+      "y": 0.9951570089363102,
+      "z": 0.04177568173205146
+  },
+  "width": 114.99854902017495,
+  "height": 114.99854902017495,
+  "projection": 1,
+  "nearLimit": 0.01,
+  "className": "Communicator.Camera"
+}]
